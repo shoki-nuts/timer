@@ -5,19 +5,19 @@ import Task from "./Task"
 // tasksURL
 const baseURL = 'http://localhost:3001/tasks'
 
-const Tasks =()=> {
+const Tasks = ()=> {
 
     const [tasks, setTasks] = useState([]);
 
     // axios get
     useEffect(()=>{
-        axios.get(baseURL)
-        .then((res)=>{
+        axios.get(baseURL,{withCredentials: true})
+        .then(res=>{
             console.log("getStatus:", res);
-            setTasks(res.data)
-        }).catch((err)=>{
+            setTasks(res.data);
+        }).catch(err=>{
             console.log('getErr:',err);
-        })
+        })  
     },[])
 
     // const handleAddTask=()=>{
@@ -31,12 +31,11 @@ const Tasks =()=> {
     //         console.log('postErr:',err);
     //     })
     // };
-
     return(
         <>
             {/* <button onClick={handleAddTask}>タスクを追加</button> */}
             <div>    
-                {tasks.map((task) =><Task task={task}/>)}
+                {tasks.map((task)=><Task key={task.id} task={task}/>)}
             </div>
         </>
     )
